@@ -8,7 +8,7 @@ import ModalEditFood from '../../components/ModalEditFood';
 import { FoodsContainer } from './styles';
 
 
-interface Food {
+interface Foodtype {
   id:number,
   name:string,
   description:string,
@@ -17,12 +17,12 @@ interface Food {
   available:boolean
 }
 
-type FoodInput = Omit<Food,"available">
+type FoodInput = Omit<Foodtype,"available">
 
-export default function Dashboard(props){
+export default function Dashboard(){
   
-  const [foods,setFoods]=useState<Food[]>([])
-  const [editingFood,setEditingFood]=useState({})
+  const [foods,setFoods]=useState<Foodtype[]>([])
+  const [editingFood,setEditingFood]=useState<Foodtype>({} as Foodtype)
   const [modalOpen,setModalOpen]=useState(false)
   const [editModalOpen,setEditModalOpen]=useState(false)
 
@@ -51,7 +51,7 @@ export default function Dashboard(props){
     }
   }
 
-  const handleUpdateFood = async food => {
+  const handleUpdateFood = async (food:FoodInput) => {
     //const { foods, editingFood } = this.state;
 
     try {
@@ -70,7 +70,7 @@ export default function Dashboard(props){
     }
   }
 
-  const handleDeleteFood = async id => {
+  const handleDeleteFood = async (id:number) => {
     
 
     await api.delete(`/foods/${id}`);
@@ -91,7 +91,7 @@ export default function Dashboard(props){
     setEditModalOpen(!editModalOpen);
   }
 
-  const handleEditFood = food => {
+  const handleEditFood = (food:Foodtype) => {
 
     setEditingFood(food)
     setEditModalOpen(true)
